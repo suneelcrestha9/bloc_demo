@@ -45,7 +45,7 @@ class Setting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Setting");
+    return Center(child: Text("Setting"));
   }
 }
 
@@ -54,6 +54,6 @@ class About extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("About");
+    return Center(child: Text("About"));
   }
 }
