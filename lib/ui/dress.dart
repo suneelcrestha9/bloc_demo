@@ -42,32 +42,59 @@ class _DressState extends State<Dress> {
                 );
               case PostStatus.success:
                 return SizedBox(
-                  height: 400,
+                  height: double.infinity,
                   width: double.infinity,
                   child: ListView.builder(
                     itemCount: state.dress.length,
                     itemBuilder: (context, index) {
                       final item = state.dress[index];
-                      return Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(item.name.toString()),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  context.read<DressBloc>().add(
-                                    DeleteDress(id: item.sId.toString()),
-                                  );
-                                },
-                                child: Icon(Icons.delete),
-                              ),
-                            ],
-                          ),
-                        ],
+                      // return Column(
+                      //   children: [
+                      //     Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         Padding(
+                      //           padding: const EdgeInsets.all(8.0),
+                      //           child: Text(item.name.toString()),
+                      //         ),
+                      //         InkWell(
+                      //           onTap: () {
+                      //             context.read<DressBloc>().add(
+                      //               DeleteDress(id: item.sId.toString()),
+                      //             );
+                      //           },
+                      //           child: Icon(Icons.delete),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // );
+                      return Card(
+                        child: Column(
+                          children: [
+                            Image.network(item.image.toString()),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(item.name.toString()),
+                                    Text(item.price.toString()),
+                                  ],
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    context.read<DressBloc>().add(
+                                      DeleteDress(id: item.sId.toString()),
+                                    );
+                                  },
+                                  child: Icon(color: Colors.red, Icons.delete),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       );
                     },
                   ),

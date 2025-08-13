@@ -38,27 +38,27 @@ class DressBloc extends Bloc<DressEvent, DressState> {
         });
   }
 
-  // for deleting the dress
   void deleteDress(DeleteDress event, Emitter<DressState> emit) async {
-    await _dressRepository
-        .deleteDress(event.id)
-        .then((value) {
-          emit(
-            state.copyWith(
-              dress: null,
-              message: "success",
-              postStatus: PostStatus.success,
-            ),
-          );
-        })
-        .catchError((onError) {
-          emit(
-            state.copyWith(
-              dress: null,
-              message: state.message,
-              postStatus: PostStatus.failed,
-            ),
-          );
-        });
+    try {
+      await _dressRepository.deleteDress(event.id);
+
+      final dressList = List.of(state.dress)
+        ..removeWhere((dress) => dress.sId.toString() == event.id.toString());
+
+      emit(
+        state.copyWith(
+          message: "Deleted Successfully",
+          postStatus: PostStatus.success,
+          dress: dressList,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          message: "Error deleting the dress",
+          postStatus: PostStatus.failed,
+        ),
+      );
+    }
   }
 }
